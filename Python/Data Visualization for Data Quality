@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.style.use('ggplot')
+import datetime as dt
+%matplotlib inline 
+
+uf = pd.read_csv('UF_R1_SUCCESS_ANALYSIS.csv')
+df2=uf.loc[:,['CUR_GPA']]
+df3=uf.loc[:,['DATE_OF_BIRTH']]
+df4=uf.loc[:,['STRM']]
+df5=uf.loc[:,['TOT_PASSD_PRGRSS']]
+df6=uf.loc[:,['TOT_TAKEN_PRGRSS']]
+df7=uf.loc[:,['TOT_TEST_CREDIT']]
+
+
+sns.violinplot(data=uf,y=df2)
+plt.show()
+
+df2.hist(figsize=(10, 15), bins=50, xlabelsize=8, ylabelsize=8)
+plt.show()
+
+f, ax = plt.subplots(figsize=(10,15))
+sns.countplot(x="DATE_OF_BIRTH", data=uf, palette="Greens_d")
+DOB=uf['DATE_OF_BIRTH'].value_counts()
+
+sns.violinplot(data=uf,y=df4)
+plt.show()
+
+df4.hist(figsize=(10, 15), bins=50, xlabelsize=8, ylabelsize=8)
+plt.show()
+
+
+sns.violinplot(data=uf,y=df5)
+plt.show()
+
+df5.hist(figsize=(10, 15), bins=50, xlabelsize=8, ylabelsize=8)
+plt.show()
+
+sns.violinplot(data=uf,y=df6)
+plt.show()
+
+df6.hist(figsize=(10, 15), bins=50, xlabelsize=8, ylabelsize=8)
+plt.show()
+
+
+
+sns.violinplot(data=uf,y=df7)
+plt.show()
+
+df7.hist(figsize=(10, 15), bins=50, xlabelsize=8, ylabelsize=8)
+plt.show()
+
+
+
+
+
+
