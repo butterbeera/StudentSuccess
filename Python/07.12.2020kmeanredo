@@ -1,0 +1,163 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jul 11 16:21:32 2020
+
+@author: dylanchen
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+
+data = pd.read_csv("F:/projectFlie/TABLE/UF_R2_UGRDKMEANREDO2007.csv")
+datafall = data[data.TERM_SEASON == 'FALL']
+dataspring = data[data.TERM_SEASON =='SPRING']
+
+#fallbegmd
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters = 3)
+refall=datafall['BEGMD'].values.reshape(-1,1)
+kmeans.fit(refall)
+
+clusters = kmeans.cluster_centers_
+print(clusters)
+y_km = kmeans.fit_predict(refall)
+
+y=[]
+for i in range(len(refall[y_km==0])):
+    y.append(0)
+f=[]
+for i in range(len(refall[y_km==1])):
+    f.append(0)
+q=[]
+for i in range(len(refall[y_km==2])):
+    q.append(0)
+
+plt.scatter(refall[y_km ==0], y,color ='red')
+plt.scatter(refall[y_km ==1], f,color ='green')
+plt.scatter(refall[y_km ==2], f,color ='yellow')
+plt.show()
+
+#springbegmd
+kmeans2 = KMeans(n_clusters = 3)
+respring=dataspring['BEGMD'].values.reshape(-1,1)
+kmeans2.fit(respring)
+
+clusters2 = kmeans2.cluster_centers_
+print(clusters2)
+y_km2 = kmeans2.fit_predict(respring)
+
+z=[]
+for i in range(len(respring[y_km2==0])):
+    z.append(0)
+c=[]
+for i in range(len(respring[y_km2==1])):
+    c.append(0)
+v=[]
+for i in range(len(respring[y_km2==2])):
+    v.append(0)
+
+plt.scatter(respring[y_km2 ==0], z,color ='red')
+plt.scatter(respring[y_km2 ==1], c,color ='green')
+plt.scatter(respring[y_km2 ==2], v,color ='yellow')
+plt.show()
+
+#springend
+kmeans3 = KMeans(n_clusters = 3)
+respring2=dataspring['ENDMD'].values.reshape(-1,1)
+kmeans3.fit(respring2)
+
+clusters3 = kmeans3.cluster_centers_
+print(clusters3)
+y_km3 = kmeans3.fit_predict(respring2)
+
+W=[]
+for i in range(len(respring2[y_km3==0])):
+    W.append(0)
+I=[]
+for i in range(len(respring2[y_km3==1])):
+    I.append(0)
+P=[]
+for i in range(len(respring2[y_km3==2])):
+    P.append(0)
+
+plt.scatter(respring2[y_km3 ==0], W,color ='red')
+plt.scatter(respring2[y_km3 ==1], I,color ='green')
+plt.scatter(respring2[y_km3 ==2], P,color ='yellow')
+plt.show()
+
+#fallendmd
+from sklearn.cluster import KMeans
+kmeans4 = KMeans(n_clusters = 3)
+refall2=datafall['ENDMD'].values.reshape(-1,1)
+kmeans4.fit(refall2)
+
+clusters4 = kmeans4.cluster_centers_
+print(clusters4)
+y_km4 = kmeans4.fit_predict(refall2)
+
+J=[]
+for i in range(len(refall2[y_km4==0])):
+    J.append(0)
+K=[]
+for i in range(len(refall2[y_km4==1])):
+    K.append(0)
+L=[]
+for i in range(len(refall2[y_km4==2])):
+    L.append(0)
+
+plt.scatter(refall2[y_km4 ==0], J,color ='red')
+plt.scatter(refall2[y_km4 ==1], K,color ='green')
+plt.scatter(refall2[y_km4 ==2], L,color ='yellow')
+plt.show()
+
+#springlength
+kmeans5 = KMeans(n_clusters = 3)
+respring3=dataspring['TERM_LENGTH_DAYS'].values.reshape(-1,1)
+kmeans5.fit(respring3)
+
+clusters5 = kmeans5.cluster_centers_
+print(clusters5)
+y_km5 = kmeans5.fit_predict(respring3)
+
+g=[]
+for i in range(len(respring3[y_km5==0])):
+    g.append(0)
+h=[]
+for i in range(len(respring3[y_km5==1])):
+    h.append(0)
+b=[]
+for i in range(len(respring3[y_km5==2])):
+    b.append(0)
+
+plt.scatter(respring3[y_km5 ==0], g,color ='red')
+plt.scatter(respring3[y_km5 ==1], h,color ='green')
+plt.scatter(respring3[y_km5 ==2], b,color ='yellow')
+plt.show()
+
+#falllength
+from sklearn.cluster import KMeans
+kmeans6= KMeans(n_clusters = 3)
+refall3=datafall['TERM_LENGTH_DAYS'].values.reshape(-1,1)
+kmeans6.fit(refall3)
+
+clusters6 = kmeans6.cluster_centers_
+print(clusters6)
+y_km6 = kmeans6.fit_predict(refall3)
+
+n=[]
+for i in range(len(refall3[y_km6==0])):
+    n.append(0)
+u=[]
+for i in range(len(refall3[y_km6==1])):
+    u.append(0)
+m=[]
+for i in range(len(refall3[y_km6==2])):
+    m.append(0)
+
+plt.scatter(refall3[y_km6==0], n,color ='red')
+plt.scatter(refall3[y_km6 ==1],u,color ='green')
+plt.scatter(refall3[y_km6 ==2],m,color ='yellow')
+plt.show()
+
