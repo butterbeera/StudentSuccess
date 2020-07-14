@@ -1,0 +1,10 @@
+https://www.theanalysisfactor.com/the-fundamental-difference-between-principal-component-analysis-and-factor-analysis/
+#Article explains the difference in math between the two techniques. 
+
+Both are data reduction techniques—they allow you to capture the variance in variables in a smaller set.
+
+Both are usually run in stat software using the same procedure, and the output looks pretty much the same.
+
+The steps you take to run them are the same—extraction, interpretation, rotation, choosing the number of factors or components.
+
+Despite all these similarities, there is a fundamental difference between them: PCA is a linear combination of variables; Factor Analysis is a measurement model of a latent variable.
