@@ -1,0 +1,43 @@
+CREATE TABLE UF_R2_PROG_REQ AS (
+SELECT 
+A.PERSON_SID,
+A.ACAD_PLAN,
+B.ACAD_PLAN_LD,
+(CASE WHEN B.ACAD_PLAN_LD like '%Advertising%' THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Aerospace Engineering%'THEN (128)
+WHEN B.ACAD_PLAN_LD like '%Biological Engineering%'THEN (132)
+WHEN B.ACAD_PLAN_LD like '%Chemical Engineering%'THEN (134)
+WHEN B.ACAD_PLAN_LD like '%Civil Engineering%'THEN (131)
+WHEN B.ACAD_PLAN_LD like '%Computer Engineering%'THEN (126)
+WHEN B.ACAD_PLAN_LD like '%Construction Management%'THEN (125)
+WHEN B.ACAD_PLAN_LD like '%Dance%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Electrical Engineering%'THEN (131)
+WHEN B.ACAD_PLAN_LD like '%Environmental Engineering%'THEN (128)
+WHEN B.ACAD_PLAN_LD like '%Industrial and Systems%'THEN (125)
+WHEN B.ACAD_PLAN_LD like '%Journalism%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Landscape Architecture%'THEN (144)
+WHEN B.ACAD_PLAN_LD like '%Materials Science and Engineering%'THEN (125)
+WHEN B.ACAD_PLAN_LD like '%Mechanical Engineering%'THEN (128)
+WHEN B.ACAD_PLAN_LD like '%Music Education%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Nuclear Engineering%'THEN (127)
+WHEN B.ACAD_PLAN_LD like '%Nursing%'THEN (121)
+WHEN B.ACAD_PLAN_LD like '%Pharmacy%'THEN (146)
+WHEN B.ACAD_PLAN_LD like '%Public Relations%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Theatre Production%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Telecommunication%'THEN (124)
+WHEN B.ACAD_PLAN_LD like '%Radiological Sciences%'THEN (125)
+ELSE (120)
+END) AS "TOT_REQ_PRGRSS"
+FROM UF_F_CPPS A inner join UF_D_ACAD_PLAN B
+on A.ACAD_PLAN = B.ACAD_PLAN_SD
+where  A.ACAD_CAR_SID =8
+)
+
+create table UF_R2_PROG_REQV2 AS(
+SELECT A.PERSON_SID,
+A.ACAD_PLAN,
+max(A.TOT_REQ_PRGRSS)AS "TOT_REQ_PRGRSS"
+FROM 
+UF_R2_PROG_REQ A
+GROUP BY
+(A.PERSON_SID,A.ACAD_PLAN))
