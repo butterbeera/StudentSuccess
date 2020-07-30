@@ -1,0 +1,174 @@
+Import packages
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+from sklearn import datasets,model_selection,linear_model,metrics,decomposition
+
+
+#Read document
+df = pd.read_csv("UF_R3_ANALYSIS_LASTMAJOR0714BE.csv")
+
+#Data Preprocessing
+df.isnull().sum()
+df.dropna(axis=0, how='any',inplace=True)
+df['STUDENT_SUCCESSNO'].value_counts()
+
+#We only need 'STUDENT_SUCCESSNO' equals to 1 or 2 to build the model:
+df = df.loc[df['STUDENT_SUCCESSNO'].isin(['1','2'])]
+
+#Draw the heatmap using seaborn
+import seaborn as sns
+cat = df[["JUNIOR_SENIOR_FLAGNO",
+"ENRL_CNT",
+"MAJORCOUNT",
+"UF_CLASSNO",
+"RESIDENCYNO",
+"TERM_END_DT_SID_CATGRYNO",
+"TERM_BEG_DT_CATGRYNO",
+"LOW_TERM_GPA_IND",
+"PARTTIME_TERM_IND",
+"NOT_REG_TERM_IND",
+"WITHDRWL_TERM_IND",
+"FULLTIME_TERM_IND",
+"OVR_12HR_TERM_IND"]]
+corcat = cat.corr(method='kendall')
+f, ax = plt.subplots(figsize=(15,15))
+sns.heatmap(corcat, vmax=.8, annot=True, square=True)
+plt.show()
+
+con = df[[
+"TERM_SID",
+"TERM_BEG_DT_SID",
+"TERM_END_DT_SID",
+"AGE_YEARS",
+"AGE_MONTHS",
+"AGE_DAYS",
+"TOT_TRNSFR",
+"TOT_TEST_CREDIT",
+"UNT_TAKEN_PRGRSS",
+"CUM_GPA",
+"TOT_TAKEN_GPA",
+“UNT_TAKEN_GPA”
+]]corcon = con.corr(method='pearson')
+f, ax = plt.subplots(figsize=(15,15))
+sns.heatmap(corcon, vmax=.8, annot=True, square=True)
+plt.show()
+ 
+#According to the plot above, we can delete the variable “TERM_END_DT_SID”, “TERM_SID” and “UNT_TAKEN_GPA”.
+
+con = df[[
+TERM_BEG_DT_SID
+"AGE_YEARS",
+"AGE_MONTHS",
+"AGE_DAYS",
+"TOT_TRNSFR",
+"TOT_TEST_CREDIT",
+"UNT_TAKEN_PRGRSS",
+"CUM_GPA",
+"TOT_TAKEN_GPA"
+]]
+
+#KNN Model
+
+#One-hot Encoding
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+from sklearn import datasets,model_selection,linear_model,metrics,decomposition
+df=pd.read_csv("D:/UFL/ISOM/summer2020/QMB6930/codeForProject/UF_R3_ANALYSIS_LASTMAJOR0714BE.csv")
+df.dropna(axis=0, how='any',inplace=True)
+df = df.loc[df['STUDENT_SUCCESSNO'].isin(['1','2'])]
+df_JUNIOR_SENIOR_FLAGNO=df['JUNIOR_SENIOR_FLAGNO'].apply(str).str.get_dummies().add_prefix('JUNIOR_SENIOR_FLAGNO: ')
+df_ENRL_CNT = df['ENRL_CNT'].apply(str).str.get_dummies().add_prefix('ENRL_CNT: ')
+df_MAJORCOUNT=df['MAJORCOUNT'].apply(str).str.get_dummies().add_prefix('MAJORCOUNT: ')
+df_UF_CLASSNO=df['UF_CLASSNO'].apply(str).str.get_dummies().add_prefix('UF_CLASSNO: ')
+df_RESIDENCYNO=df['RESIDENCYNO'].apply(str).str.get_dummies().add_prefix('RESIDENCYNO: ')
+df_TERM_END_DT_SID_CATGRYNO=df['TERM_END_DT_SID_CATGRYNO'].apply(str).str.get_dummies().add_prefix('TERM_END_DT_SID_CATGRYNO: ')
+df_TERM_BEG_DT_CATGRYNO=df['TERM_BEG_DT_CATGRYNO'].apply(str).str.get_dummies().add_prefix('TERM_BEG_DT_CATGRYNO: ')
+df_LOW_TERM_GPA_IND=df['LOW_TERM_GPA_IND'].apply(str).str.get_dummies().add_prefix('LOW_TERM_GPA_IND: ')
+df_PARTTIME_TERM_IND=df['PARTTIME_TERM_IND'].apply(str).str.get_dummies().add_prefix('PARTTIME_TERM_IND: ')
+df_NOT_REG_TERM_IND=df['NOT_REG_TERM_IND'].apply(str).str.get_dummies().add_prefix('NOT_REG_TERM_IND: ')
+df_WITHDRWL_TERM_IND=df['WITHDRWL_TERM_IND'].apply(str).str.get_dummies().add_prefix('WITHDRWL_TERM_IND: ')
+df_FULLTIME_TERM_IND=df['FULLTIME_TERM_IND'].apply(str).str.get_dummies().add_prefix('FULLTIME_TERM_IND: ')
+df_OVR_12HR_TERM_IND=df['OVR_12HR_TERM_IND'].apply(str).str.get_dummies().add_prefix('OVR_12HR_TERM_IND: ')
+df=pd.concat([df,df_JUNIOR_SENIOR_FLAGNO,df_ENRL_CNT,df_MAJORCOUNT,df_UF_CLASSNO,df_RESIDENCYNO,df_TERM_END_DT_SID_CATGRYNO,df_TERM_BEG_DT_CATGRYNO,df_LOW_TERM_GPA_IND,df_PARTTIME_TERM_IND,df_NOT_REG_TERM_IND,df_WITHDRWL_TERM_IND,df_FULLTIME_TERM_IND,df_OVR_12HR_TERM_IND],axis=1)
+df = df.drop([
+    'JUNIOR_SENIOR_FLAGNO',
+ 'ENRL_CNT',
+ 'MAJORCOUNT',
+ 'UF_CLASSNO',
+ 'RESIDENCYNO',
+ 'TERM_END_DT_SID_CATGRYNO',
+ 'TERM_BEG_DT_CATGRYNO',
+ 'LOW_TERM_GPA_IND',
+ 'PARTTIME_TERM_IND',
+ 'NOT_REG_TERM_IND',
+ 'WITHDRWL_TERM_IND',
+ 'FULLTIME_TERM_IND',
+ 'OVR_12HR_TERM_IND'
+],axis=1)
+
+#Model Building
+from sklearn.model_selection import train_test_split
+Y = df['STUDENT_SUCCESSNO']
+X=df.drop(['STUDENT_SUCCESSNO', 'TERM_END_DT_SID','TERM_SID','UNT_TAKEN_GPA'], axis= 1)
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=3234)
+
+from sklearn.neighbors import KNeighborsClassifier as kNN
+model = kNN(n_neighbors = 3, algorithm='auto', weights='distance')
+model.fit(x_train,y_train)
+y_pred = model.predict(x_test)
+from sklearn.metrics import classification_report, confusion_matrix
+print (metrics.classification_report(y_test, y_pred))
+print(confusion_matrix(y_test, y_pred))
+
+#Lime
+xtrainnp = np.array(x_train)
+ytrainnp = np.array(y_train)
+explainer = lime.lime_tabular.LimeTabularExplainer(xtrainnp,
+                    feature_names=dfcolumn, 
+                    class_names=['1','2'], 
+                    verbose=True, mode='regression')
+choosen_instance = x_test.iloc[[700]].values[0]
+exp = explainer.explain_instance(choosen_instance, model.predict,num_features=7)
+exp.show_in_notebook(show_all=False)
+exp.as_pyplot_figure()
+ 
+df2=pd.read_csv("D:/UFL/ISOM/summer2020/QMB6930/codeForProject/UF_R3_ANALYSIS_LASTMAJOR0714BE.csv")
+df2.dropna(axis=0, how='any',inplace=True)
+df2 = df2.loc[df2['STUDENT_SUCCESSNO'].isin(['1','2'])]
+print(x_test.iloc[[700]])
+ 
+pd.set_option('display.max_columns', None)
+print(df2.iloc[[46109]])
+ 
+choosen_instance = x_test.iloc[[25]].values[0]
+exp = explainer.explain_instance(choosen_instance, model.predict,num_features=22)
+exp.show_in_notebook(show_all=False)
+exp.as_pyplot_figure()
+ 
+print(x_test.iloc[[25]])
+ 
+print(df2.iloc[[34670]])
+ 
+#Visualization
+
+fig = plt.figure(figsize=(20,10))
+plt.bar(df['STUDENT_SUCCESSNO'].value_counts().index, df['STUDENT_SUCCESSNO'].value_counts().values)
+plt.xticks(df['STUDENT_SUCCESSNO'].value_counts().index,fontsize=15)
+plt.show()
+
+plt.scatter(X.values[:, 0], X.values[:, 1], c=Y)
+plt.show()
+ 
+
+
+
+
+
+
+
+
+
